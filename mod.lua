@@ -1,3 +1,6 @@
+-- Made by GuglioIsStupid
+-- Some code was referenced from https://github.com/GuglioIsStupid/pong-love2d
+
 function create()
     dofile(formCompletePath("spriteFrame.lua"))
 

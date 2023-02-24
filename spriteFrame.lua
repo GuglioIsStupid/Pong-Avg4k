@@ -1,7 +1,5 @@
 -- SPRITEFRAME BY KADE DEV https://github.com/KadeDev/Avg4k-SpriteFrame
 
-
-
 -- Class.lua (https://github.com/jonstoler/class.lua)
 
 Class = {}
