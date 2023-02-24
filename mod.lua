@@ -9,8 +9,8 @@ function create()
     ballStuff = {
         x = 0,
         y = 0,
-        DX = math.random(2) == 1 and 4 or -4,
-        DY = math.random(-4, 4)
+        DX = math.random(2) == 1 and 100 or -100,
+        DY = math.random(-100, 100)
     } -- Define our balls variables
 
     -- Make the paddles and define their variables
@@ -42,9 +42,17 @@ function create()
     SCREEN_X_1280 = 1280/2
 
     DONTPRESS = Text:new('dontpress', 'arial', 'DONT PRESS ANYTHING', 24, 520, 400)
+
+    -- Deltatime
+
+    time = 0
+    lastTime = 0
+    deltaTime = 0
 end
 
 function update(beat)
+    time = getTime()
+    deltaTime = time - lastTime
     SpriteFrame.update()
     globalBeat = beat -- make the beat global so we can use it in other functions, ended up unused... For now...
 
@@ -56,8 +64,8 @@ function update(beat)
 
     if shizLoaded then
         -- Ball
-        ballStuff.x = ballStuff.x + ballStuff.DX
-        ballStuff.y = ballStuff.y + ballStuff.DY
+        ballStuff.x = ballStuff.x + ballStuff.DX * deltaTime
+        ballStuff.y = ballStuff.y + ballStuff.DY * deltaTime
 
         if ballStuff.x >= 1280/2+25 then
             ballStuff.x = 1279/2
@@ -131,6 +139,8 @@ function update(beat)
             end
         end
     end
+
+    lastTime = time
 end
 
 function key_pressed(id)
