@@ -13,7 +13,7 @@ function create()
         x = 0,
         y = 0,
         DX = math.random(2) == 1 and 100 or -100,
-        DY = math.random(-100, 100)
+        DY = math.random(-50, 50)
     } -- Define our balls variables
 
     -- Make the paddles and define their variables
