@@ -4,15 +4,16 @@ function create()
     SpriteFrame.create() -- this inits the classes
 
     -- Pong
-    createSprite("ball", "ball", math.floor(1280/2-25), math.floor(720/2-25))
+    createSprite("ball", "ball", math.floor(1280/2-25), math.floor(720/2-25)) -- Make our ball in the middle of the screen
 
     ballStuff = {
         x = 0,
         y = 0,
         DX = math.random(2) == 1 and 4 or -4,
         DY = math.random(-4, 4)
-    }
+    } -- Define our balls variables
 
+    -- Make the paddles and define their variables
     createSprite("paddle", "paddle", 0, 0)
     createSprite("paddle", "paddle2", math.floor(1280-15), 0)
 
@@ -28,11 +29,9 @@ function create()
         speed = 10,
     }
 
-    ballStuff.direction = math.random(0, 360)
-    ballStuff.directiony = math.random(0, 360)
+    shizLoaded = true -- idk if this actually worked or not, but it's here just in case
 
-    shizLoaded = true
-
+    -- Set our players scores and make them into text objects
     score = 0
     score2 = 0
 
@@ -47,20 +46,16 @@ end
 
 function update(beat)
     SpriteFrame.update()
-    globalBeat = beat
+    globalBeat = beat -- make the beat global so we can use it in other functions, ended up unused... For now...
 
-    if beat > 0 then 
+    if beat > 0 then -- text, tells the user to not touch a key cuz it will break (and idk why, avg4k just dies lmao)
         DONTPRESS.text = ""
         DONTPRESS.x = -400
         DONTPRESS.y = -400
     end
 
-    -- Ball
-
     if shizLoaded then
-        --ballStuff.x = ballStuff.x + ballStuff.ballDX
-        --ballStuff.y = ballStuff.y + ballStuff.ballDY
-
+        -- Ball
         ballStuff.x = ballStuff.x + ballStuff.DX
         ballStuff.y = ballStuff.y + ballStuff.DY
 
@@ -88,6 +83,7 @@ function update(beat)
             ballStuff.DY = -ballStuff.DY
         end
 
+        -- Set the balls position
         activateSpriteMod("ball", "movex", beat, 0, "linear", ballStuff.x)
         activateSpriteMod("ball", "movey", beat, 0, "linear", ballStuff.y)
 
@@ -100,6 +96,7 @@ function update(beat)
             paddleStuff.y = 0
         end
 
+        -- Set the paddles position
         activateSpriteMod("paddle", "movey", beat, 0, "linear", paddleStuff.y)
 
         -- Paddle 2
@@ -112,12 +109,13 @@ function update(beat)
             paddleStuff2.y = 0
         end
 
+        -- Set the second paddles position
         activateSpriteMod("paddle2", "movey", beat, 0, "linear", paddleStuff2.y)
 
         -- Collision
-        -- since paddles are just 720, and the ball is 720/2,
-        -- its all weird........
-        -- so just add 720/2 to the ball's y value
+        -- since paddles y works like 720 and the balls y works like 720/2...
+        -- its all weird...
+        -- so ig just add 720/2 to the ball's y value lmao
 
         if ballStuff.x >= -(1280/2) and ballStuff.x <= -(1280/2)+15 then
             if ballStuff.y+720/2 >= paddleStuff.y and ballStuff.y+720/2 <= paddleStuff.y+180 then
@@ -136,11 +134,10 @@ function update(beat)
 end
 
 function key_pressed(id)
-    id = tonumber(id) or 1
+    id = tonumber(id) or 1 -- Make sure id isn't nil so it doesn't try to compare it to a number and break
     if shizLoaded then
-        if id then 
-            consolePrint("Key pressed: " .. tostring(id))
-        end
+        -- W and S controls player 1
+        -- Up and Down arrow controls player 2
         if id == 1073741906 then -- up arrow
             paddleStuff2.y = paddleStuff2.y - paddleStuff2.speed * 4
         elseif id == 1073741905 then -- down arrow
@@ -150,7 +147,5 @@ function key_pressed(id)
         elseif id == 115 then -- s
             paddleStuff.y = paddleStuff.y + paddleStuff.speed * 4
         end
-
-        activateSpriteMod("paddle", "movey", globalBeat, 0, "linear", paddleStuff.y)
     end
 end
