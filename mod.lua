@@ -12,8 +12,8 @@ function create()
     ballStuff = {
         x = 0,
         y = 0,
-        DX = math.random(2) == 1 and 100 or -100,
-        DY = math.random(-50, 50)
+        DX = math.random(2) == 1 and 400 or -400,
+        DY = math.random(-200, 200)
     } -- Define our balls variables
 
     -- Make the paddles and define their variables
@@ -55,9 +55,12 @@ end
 
 function update(beat)
     time = getTime()
-    deltaTime = time - lastTime
+    deltaTime = (time - lastTime) / 1000
     SpriteFrame.update()
     globalBeat = beat -- make the beat global so we can use it in other functions, ended up unused... For now...
+
+    --consolePrint("FPS: " .. 1/deltaTime)
+    --consolePrint("Delta Time: " .. deltaTime)
 
     if beat > 0 then -- text, tells the user to not touch a key cuz it will break (and idk why, avg4k just dies lmao)
         DONTPRESS.text = ""
@@ -131,14 +134,14 @@ function update(beat)
         if ballStuff.x >= -(1280/2) and ballStuff.x <= -(1280/2)+15 then
             if ballStuff.y+720/2 >= paddleStuff.y and ballStuff.y+720/2 <= paddleStuff.y+180 then
                 ballStuff.DX = -ballStuff.DX
-                ballStuff.DY = math.random(-4, 4)
+                ballStuff.DY = math.random(-200, 200)
             end
         end
 
-        if ballStuff.x-25 <= 1280/2 and ballStuff.x-25 >= 1280/2-15 then
+        if ballStuff.x-30 <= 1280/2 and ballStuff.x-25 >= 1280/2-30 then
             if ballStuff.y+720/2 >= paddleStuff2.y and ballStuff.y+720/2 <= paddleStuff2.y+180 then
                 ballStuff.DX = -ballStuff.DX
-                ballStuff.DY = math.random(-4, 4)
+                ballStuff.DY = math.random(-200, 200)
             end
         end
     end
